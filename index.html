@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VantaBlack - Mi Portafolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Fondo VantaBlack -->
+    <div id="vanta-background"></div>
+    
+    <!-- Contenedor Principal -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">VantaBlack</h1>
+                <p class="subtitle">Mi espacio personal</p>
+            </div>
+            <button id="adminBtn" class="admin-btn">🔐 Admin</button>
+        </header>
+
+        <!-- Vista Pública - Feed de Posts -->
+        <main class="main-content">
+            <div class="feed-container">
+                <div id="postsList" class="posts-list">
+                    <div class="loading">Cargando publicaciones...</div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 VantaBlack. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <!-- Modal de Administración -->
+    <div id="adminModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Panel de Administración</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+
+            <!-- Formulario de Login -->
+            <div id="loginSection" class="modal-section active">
+                <div class="login-form">
+                    <h3>Acceso Restringido</h3>
+                    <p>Ingresa tu contraseña para acceder al panel de administración</p>
+                    <input type="password" id="passwordInput" placeholder="Contraseña" class="form-input">
+                    <button id="loginBtn" class="btn btn-primary">Ingresar</button>
+                    <p id="loginError" class="error-message"></p>
+                </div>
+            </div>
+
+            <!-- Panel Admin (Oculto hasta autenticación) -->
+            <div id="adminSection" class="modal-section hidden">
+                <div class="publish-panel">
+                    <h3>📝 Crear Publicación</h3>
+                    
+                    <!-- Tipo de Contenido -->
+                    <div class="form-group">
+                        <label>Tipo de Contenido:</label>
+                        <select id="contentType" class="form-input">
+                            <option value="text">📝 Texto</option>
+                            <option value="image">🖼️ Imagen</option>
+                            <option value="video">🎬 Video</option>
+                        </select>
+                    </div>
+
+                    <!-- Sección Texto -->
+                    <div id="textSection" class="content-section active">
+                        <div class="form-group">
+                            <label>Mensaje:</label>
+                            <textarea id="messageText" class="form-input textarea" placeholder="Escribe tu mensaje aquí..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Sección Imagen -->
+                    <div id="imageSection" class="content-section hidden">
+                        <div class="form-group">
+                            <label>Selecciona una imagen:</label>
+                            <input type="file" id="imageFile" accept="image/*" class="form-input">
+                            <div id="imagePreview" class="preview hidden">
+                                <img id="previewImg" src="" alt="Vista previa">
+                                <button type="button" id="clearImageBtn" class="btn-clear">✕</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sección Video -->
+                    <div id="videoSection" class="content-section hidden">
+                        <div class="form-group">
+                            <label>URL del Video (YouTube, Vimeo, etc):</label>
+                            <input type="text" id="videoUrl" class="form-input" placeholder="https://youtube.com/embed/...">
+                        </div>
+                        <div class="form-group">
+                            <label>O sube un archivo de video:</label>
+                            <input type="file" id="videoFile" accept="video/*" class="form-input">
+                            <div id="videoPreview" class="preview hidden">
+                                <video id="previewVideo" controls></video>
+                                <button type="button" id="clearVideoBtn" class="btn-clear">✕</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Título y Descripción -->
+                    <div class="form-group">
+                        <label>Título (opcional):</label>
+                        <input type="text" id="postTitle" class="form-input" placeholder="Título de la publicación">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descripción (opcional):</label>
+                        <textarea id="postDescription" class="form-input textarea" placeholder="Detalles adicionales..."></textarea>
+                    </div>
+
+                    <!-- Botón Publicar -->
+                    <button id="publishBtn" class="btn btn-success">✈️ Publicar</button>
+                    <p id="publishMessage" class="message"></p>
+                </div>
+
+                <!-- Gestor de Posts Existentes -->
+                <div class="manage-panel">
+                    <h3>📊 Mis Publicaciones</h3>
+                    <div id="adminPostsList" class="admin-posts-list">
+                        <p class="loading">Cargando publicaciones...</p>
+                    </div>
+                </div>
+
+                <!-- Botón Logout -->
+                <button id="logoutBtn" class="btn btn-danger">🚪 Cerrar Sesión</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
