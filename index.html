@@ -4,141 +4,709 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VantaBlack - Mi Portafolio</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+
+        #vanta {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #00ff00;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            color: #00ff00;
+            text-shadow: 0 0 20px #00ff00;
+            letter-spacing: 3px;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: #00ff00;
+            letter-spacing: 2px;
+        }
+
+        .admin-btn {
+            padding: 12px 30px;
+            background: transparent;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .admin-btn:hover {
+            background: #00ff00;
+            color: #000;
+            box-shadow: 0 0 20px #00ff00;
+        }
+
+        .posts {
+            display: grid;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .post {
+            background: rgba(30, 30, 30, 0.9);
+            border: 1px solid #00ff00;
+            border-radius: 8px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+        }
+
+        .post-title {
+            color: #00ff00;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .post-date {
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .post-text {
+            color: #fff;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .post-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-top: 15px;
+            max-height: 400px;
+        }
+
+        .post-video {
+            width: 100%;
+            height: 400px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 60px 20px;
+            color: #888;
+            font-size: 1.1em;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #00ff00;
+            color: #888;
+            margin-top: 40px;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #00ff00;
+        }
+
+        .modal-header h2 {
+            color: #00ff00;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #00ff00;
+            font-size: 2em;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            background: #0a0a0a;
+            border: 1px solid #00ff00;
+            color: #fff;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 1em;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #00ff00;
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background: #00ffff;
+            box-shadow: 0 0 15px #00ffff;
+        }
+
+        .btn-danger {
+            background: #ff4444;
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background: #ff6666;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .message.success {
+            background: rgba(0, 255, 0, 0.2);
+            color: #00ff00;
+            border: 1px solid #00ff00;
+        }
+
+        .message.error {
+            background: rgba(255, 68, 68, 0.2);
+            color: #ff4444;
+            border: 1px solid #ff4444;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .preview {
+            margin-top: 10px;
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            padding: 10px;
+            background: #0a0a0a;
+            position: relative;
+        }
+
+        .preview img, .preview video {
+            max-width: 100%;
+            height: auto;
+            border-radius: 3px;
+        }
+
+        .btn-clear {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #ff4444;
+            border: none;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Fondo VantaBlack -->
-    <div id="vanta-background"></div>
-    
-    <!-- Contenedor Principal -->
+    <div id="vanta"></div>
+
     <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-content">
-                <h1 class="title">VantaBlack</h1>
+        <header>
+            <div>
+                <h1>VantaBlack</h1>
                 <p class="subtitle">Mi espacio personal</p>
             </div>
-            <button id="adminBtn" class="admin-btn">🔐 Admin</button>
+            <button class="admin-btn" id="openAdminBtn">🔐 Admin</button>
         </header>
 
-        <!-- Vista Pública - Feed de Posts -->
-        <main class="main-content">
-            <div class="feed-container">
-                <div id="postsList" class="posts-list">
-                    <div class="loading">Cargando publicaciones...</div>
-                </div>
-            </div>
+        <main>
+            <div id="postsList" class="posts"></div>
         </main>
 
-        <!-- Footer -->
-        <footer class="footer">
+        <footer>
             <p>&copy; 2024 VantaBlack. Todos los derechos reservados.</p>
         </footer>
     </div>
 
-    <!-- Modal de Administración -->
-    <div id="adminModal" class="modal hidden">
+    <!-- MODAL ADMIN -->
+    <div id="adminModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Panel de Administración</h2>
-                <button class="close-btn" id="closeModal">&times;</button>
+                <button class="close-btn" id="closeAdminBtn">&times;</button>
             </div>
 
-            <!-- Formulario de Login -->
-            <div id="loginSection" class="modal-section active">
-                <div class="login-form">
-                    <h3>Acceso Restringido</h3>
-                    <p>Ingresa tu contraseña para acceder al panel de administración</p>
-                    <input type="password" id="passwordInput" placeholder="Contraseña" class="form-input">
-                    <button id="loginBtn" class="btn btn-primary">Ingresar</button>
-                    <p id="loginError" class="error-message"></p>
+            <!-- LOGIN -->
+            <div id="loginSection" class="section active">
+                <h3 style="color: #00ff00; margin-bottom: 15px;">Acceso Restringido</h3>
+                <div class="form-group">
+                    <label>Contraseña:</label>
+                    <input type="password" id="passwordInput" placeholder="Ingresa contraseña">
                 </div>
+                <button class="btn btn-primary" id="loginBtn">Ingresar</button>
+                <p id="loginError" style="color: #ff4444; margin-top: 10px;"></p>
             </div>
 
-            <!-- Panel Admin (Oculto hasta autenticación) -->
-            <div id="adminSection" class="modal-section hidden">
-                <div class="publish-panel">
-                    <h3>📝 Crear Publicación</h3>
-                    
-                    <!-- Tipo de Contenido -->
-                    <div class="form-group">
-                        <label>Tipo de Contenido:</label>
-                        <select id="contentType" class="form-input">
-                            <option value="text">📝 Texto</option>
-                            <option value="image">🖼️ Imagen</option>
-                            <option value="video">🎬 Video</option>
-                        </select>
-                    </div>
+            <!-- ADMIN PANEL -->
+            <div id="adminSection" class="section">
+                <h3 style="color: #00ff00; margin-bottom: 20px;">Crear Publicación</h3>
 
-                    <!-- Sección Texto -->
-                    <div id="textSection" class="content-section active">
-                        <div class="form-group">
-                            <label>Mensaje:</label>
-                            <textarea id="messageText" class="form-input textarea" placeholder="Escribe tu mensaje aquí..."></textarea>
-                        </div>
-                    </div>
-
-                    <!-- Sección Imagen -->
-                    <div id="imageSection" class="content-section hidden">
-                        <div class="form-group">
-                            <label>Selecciona una imagen:</label>
-                            <input type="file" id="imageFile" accept="image/*" class="form-input">
-                            <div id="imagePreview" class="preview hidden">
-                                <img id="previewImg" src="" alt="Vista previa">
-                                <button type="button" id="clearImageBtn" class="btn-clear">✕</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sección Video -->
-                    <div id="videoSection" class="content-section hidden">
-                        <div class="form-group">
-                            <label>URL del Video (YouTube, Vimeo, etc):</label>
-                            <input type="text" id="videoUrl" class="form-input" placeholder="https://youtube.com/embed/...">
-                        </div>
-                        <div class="form-group">
-                            <label>O sube un archivo de video:</label>
-                            <input type="file" id="videoFile" accept="video/*" class="form-input">
-                            <div id="videoPreview" class="preview hidden">
-                                <video id="previewVideo" controls></video>
-                                <button type="button" id="clearVideoBtn" class="btn-clear">✕</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Título y Descripción -->
-                    <div class="form-group">
-                        <label>Título (opcional):</label>
-                        <input type="text" id="postTitle" class="form-input" placeholder="Título de la publicación">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Descripción (opcional):</label>
-                        <textarea id="postDescription" class="form-input textarea" placeholder="Detalles adicionales..."></textarea>
-                    </div>
-
-                    <!-- Botón Publicar -->
-                    <button id="publishBtn" class="btn btn-success">✈️ Publicar</button>
-                    <p id="publishMessage" class="message"></p>
+                <div class="form-group">
+                    <label>Tipo de Contenido:</label>
+                    <select id="contentType">
+                        <option value="text">📝 Texto</option>
+                        <option value="image">🖼️ Imagen</option>
+                        <option value="video">🎬 Video</option>
+                    </select>
                 </div>
 
-                <!-- Gestor de Posts Existentes -->
-                <div class="manage-panel">
-                    <h3>📊 Mis Publicaciones</h3>
-                    <div id="adminPostsList" class="admin-posts-list">
-                        <p class="loading">Cargando publicaciones...</p>
+                <!-- TEXTO -->
+                <div id="textSection" class="section active">
+                    <div class="form-group">
+                        <label>Mensaje:</label>
+                        <textarea id="messageText" placeholder="Escribe tu mensaje..."></textarea>
                     </div>
                 </div>
 
-                <!-- Botón Logout -->
-                <button id="logoutBtn" class="btn btn-danger">🚪 Cerrar Sesión</button>
+                <!-- IMAGEN -->
+                <div id="imageSection" class="section">
+                    <div class="form-group">
+                        <label>Selecciona imagen:</label>
+                        <input type="file" id="imageFile" accept="image/*">
+                        <div id="imagePreview" class="preview hidden">
+                            <img id="previewImg" src="">
+                            <button type="button" class="btn-clear" onclick="clearImage()">✕</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIDEO -->
+                <div id="videoSection" class="section">
+                    <div class="form-group">
+                        <label>URL Video (YouTube, Vimeo):</label>
+                        <input type="text" id="videoUrl" placeholder="https://youtube.com/embed/...">
+                    </div>
+                    <div class="form-group">
+                        <label>O sube archivo video:</label>
+                        <input type="file" id="videoFile" accept="video/*">
+                        <div id="videoPreview" class="preview hidden">
+                            <video id="previewVideo" controls></video>
+                            <button type="button" class="btn-clear" onclick="clearVideo()">✕</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Título (opcional):</label>
+                    <input type="text" id="postTitle" placeholder="Título">
+                </div>
+
+                <div class="form-group">
+                    <label>Descripción (opcional):</label>
+                    <textarea id="postDesc" placeholder="Detalles..."></textarea>
+                </div>
+
+                <button class="btn btn-primary" id="publishBtn">✈️ Publicar</button>
+                <p id="publishMsg" class="message hidden"></p>
+
+                <hr style="border: 1px solid #00ff00; margin: 20px 0;">
+
+                <h3 style="color: #00ff00; margin-bottom: 15px;">Mis Publicaciones</h3>
+                <div id="myPosts" style="max-height: 300px; overflow-y: auto;"></div>
+
+                <button class="btn btn-danger" id="logoutBtn" style="margin-top: 20px;">🚪 Cerrar Sesión</button>
             </div>
         </div>
     </div>
 
-    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
-    <script src="app.js"></script>
+
+    <script>
+        // VANTA
+        VANTA.NET({
+            el: '#vanta',
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200,
+            minWidth: 200,
+            scale: 1,
+            scaleMobile: 1,
+            color: 0x00ff00,
+            backgroundColor: 0x0a0a0a,
+            points: 12,
+            maxDistance: 20,
+            spacing: 15
+        });
+
+        // STATE
+        let isAuthenticated = false;
+        const PASSWORD = 'admin123';
+
+        // DOM
+        const openAdminBtn = document.getElementById('openAdminBtn');
+        const closeAdminBtn = document.getElementById('closeAdminBtn');
+        const adminModal = document.getElementById('adminModal');
+        const loginSection = document.getElementById('loginSection');
+        const adminSection = document.getElementById('adminSection');
+        const loginBtn = document.getElementById('loginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const passwordInput = document.getElementById('passwordInput');
+        const loginError = document.getElementById('loginError');
+        const contentType = document.getElementById('contentType');
+        const publishBtn = document.getElementById('publishBtn');
+        const publishMsg = document.getElementById('publishMsg');
+        const imageFile = document.getElementById('imageFile');
+        const videoFile = document.getElementById('videoFile');
+        const postsList = document.getElementById('postsList');
+        const myPosts = document.getElementById('myPosts');
+
+        // EVENTOS
+        openAdminBtn.addEventListener('click', () => {
+            adminModal.classList.add('active');
+            passwordInput.focus();
+        });
+
+        closeAdminBtn.addEventListener('click', () => {
+            if (isAuthenticated && confirm('¿Cerrar sesión?')) {
+                logout();
+            } else if (!isAuthenticated) {
+                adminModal.classList.remove('active');
+            }
+        });
+
+        loginBtn.addEventListener('click', login);
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') login();
+        });
+
+        logoutBtn.addEventListener('click', logout);
+
+        contentType.addEventListener('change', () => {
+            document.querySelectorAll('[id$="Section"]').forEach(el => {
+                if (el.id.startsWith(contentType.value)) {
+                    el.classList.add('active');
+                } else {
+                    el.classList.remove('active');
+                }
+            });
+        });
+
+        imageFile.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    document.getElementById('previewImg').src = event.target.result;
+                    document.getElementById('imagePreview').classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        videoFile.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    document.getElementById('previewVideo').src = event.target.result;
+                    document.getElementById('videoPreview').classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        publishBtn.addEventListener('click', publish);
+
+        // FUNCIONES
+        function login() {
+            const pass = passwordInput.value;
+            if (pass === PASSWORD) {
+                isAuthenticated = true;
+                loginError.textContent = '';
+                loginSection.classList.remove('active');
+                adminSection.classList.add('active');
+                loadMyPosts();
+            } else {
+                loginError.textContent = '❌ Contraseña incorrecta';
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        }
+
+        function logout() {
+            isAuthenticated = false;
+            loginSection.classList.add('active');
+            adminSection.classList.remove('active');
+            passwordInput.value = '';
+            clearForm();
+        }
+
+        function clearImage() {
+            document.getElementById('imageFile').value = '';
+            document.getElementById('imagePreview').classList.add('hidden');
+        }
+
+        function clearVideo() {
+            document.getElementById('videoFile').value = '';
+            document.getElementById('videoUrl').value = '';
+            document.getElementById('videoPreview').classList.add('hidden');
+        }
+
+        function clearForm() {
+            document.getElementById('messageText').value = '';
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postDesc').value = '';
+            document.getElementById('videoUrl').value = '';
+            clearImage();
+            clearVideo();
+            publishMsg.classList.add('hidden');
+            contentType.value = 'text';
+            contentType.dispatchEvent(new Event('change'));
+        }
+
+        async function publish() {
+            const type = contentType.value;
+            const title = document.getElementById('postTitle').value || `Post ${new Date().toLocaleDateString()}`;
+            const desc = document.getElementById('postDesc').value;
+            const date = new Date().toISOString().split('T')[0];
+
+            let content = '';
+
+            try {
+                publishMsg.textContent = '⏳ Publicando...';
+                publishMsg.classList.remove('hidden', 'error');
+                publishMsg.classList.add('success');
+
+                if (type === 'text') {
+                    content = document.getElementById('messageText').value;
+                    if (!content) throw new Error('Escribe un mensaje');
+                } else if (type === 'image') {
+                    const file = imageFile.files[0];
+                    if (!file) throw new Error('Selecciona una imagen');
+                    content = await fileToBase64(file);
+                } else if (type === 'video') {
+                    const url = document.getElementById('videoUrl').value;
+                    const file = videoFile.files[0];
+                    if (url) {
+                        content = url;
+                    } else if (file) {
+                        content = await fileToBase64(file);
+                    } else {
+                        throw new Error('Proporciona URL o archivo de video');
+                    }
+                }
+
+                const post = { id: Date.now(), type, title, desc, content, date };
+                let posts = JSON.parse(localStorage.getItem('posts') || '[]');
+                posts.push(post);
+                localStorage.setItem('posts', JSON.stringify(posts));
+
+                publishMsg.textContent = '✅ ¡Publicado!';
+                clearForm();
+                loadMyPosts();
+                loadPosts();
+
+                setTimeout(() => publishMsg.classList.add('hidden'), 3000);
+            } catch (error) {
+                publishMsg.textContent = `❌ ${error.message}`;
+                publishMsg.classList.remove('success');
+                publishMsg.classList.add('error');
+            }
+        }
+
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function loadPosts() {
+            const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+            posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            if (posts.length === 0) {
+                postsList.innerHTML = '<div class="empty">📭 No hay publicaciones</div>';
+                return;
+            }
+
+            postsList.innerHTML = posts.map(post => {
+                let content = '';
+                if (post.type === 'text') {
+                    content = `<p class="post-text">${post.content}</p>`;
+                } else if (post.type === 'image') {
+                    content = `<img src="${post.content}" class="post-image">`;
+                } else if (post.type === 'video') {
+                    if (post.content.includes('youtube') || post.content.includes('youtu.be') || post.content.includes('vimeo')) {
+                        content = `<iframe class="post-video" src="${post.content}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                    } else {
+                        content = `<video class="post-video" controls><source src="${post.content}" type="video/mp4"></video>`;
+                    }
+                }
+
+                return `
+                    <div class="post">
+                        <div class="post-title">${post.title}</div>
+                        <div class="post-date">${new Date(post.date).toLocaleDateString('es-ES')}</div>
+                        ${content}
+                        ${post.desc ? `<p style="margin-top: 10px; color: #ccc; font-style: italic;">"${post.desc}"</p>` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function loadMyPosts() {
+            const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+            posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            if (posts.length === 0) {
+                myPosts.innerHTML = '<p style="color: #888;">No hay publicaciones</p>';
+                return;
+            }
+
+            myPosts.innerHTML = posts.map(post => `
+                <div style="background: #0a0a0a; border: 1px solid #00ff00; border-radius: 5px; padding: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="color: #00ff00;">${post.type === 'text' ? '📝' : post.type === 'image' ? '🖼️' : '🎬'} ${post.title}</div>
+                        <div style="font-size: 0.85em; color: #888;">${new Date(post.date).toLocaleDateString('es-ES')}</div>
+                    </div>
+                    <button onclick="deletePost(${post.id})" class="btn btn-danger" style="width: auto; padding: 5px 15px; margin: 0;">Eliminar</button>
+                </div>
+            `).join('');
+        }
+
+        function deletePost(id) {
+            if (confirm('¿Eliminar este post?')) {
+                let posts = JSON.parse(localStorage.getItem('posts') || '[]');
+                posts = posts.filter(p => p.id !== id);
+                localStorage.setItem('posts', JSON.stringify(posts));
+                loadMyPosts();
+                loadPosts();
+            }
+        }
+
+        // INIT
+        loadPosts();
+    </script>
 </body>
 </html>
